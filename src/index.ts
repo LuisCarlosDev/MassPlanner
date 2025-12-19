@@ -1,7 +1,39 @@
+import openapi from "@elysiajs/openapi";
 import { Elysia } from "elysia";
+import z from "zod";
+import { auth, OpenAPI } from "./lib/auth";
+import cors from "@elysiajs/cors";
+import { env } from "./env";
 
-const app = new Elysia().get("/", () => "Hello Elysia").listen(3000);
+const app = new Elysia()
+  .use(
+    cors({
+      origin: "*",
+      methods: ["GET", "POST", "PUT", "DELETE"],
+      allowedHeaders: ["Content-Type", "Authorization"],
+      credentials: true,
+    })
+  )
+  .mount(auth.handler)
+  .use(
+    openapi({
+      documentation: {
+        info: {
+          title: "Mass Planner API",
+          version: "1.0.0",
+          description: "API for create mass or celebrations",
+        },
+        components: await OpenAPI.components,
+        paths: await OpenAPI.getPaths(),
+      },
+      mapJsonSchema: {
+        zod: z.toJSONSchema,
+      },
+    })
+  );
 
-console.log(
-  `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
-);
+app.listen(env.PORT, () => {
+  console.log(
+    `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
+  );
+});
