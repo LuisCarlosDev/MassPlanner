@@ -10,6 +10,17 @@ export const auth = betterAuth({
   }),
   emailAndPassword: {
     enabled: true,
+    password: {
+      hash: (password: string) => Bun.password.hash(password),
+      verify: ({ password, hash }) => Bun.password.verify(password, hash),
+    },
+  },
+  session: {
+    expiresIn: 60 * 60 * 24 * 7, // 7 days
+    cookieCache: {
+      enabled: true,
+      maxAge: 60 * 5, // 5 minutes
+    },
   },
   basePath: "/api/auth",
   plugins: [openAPI()],

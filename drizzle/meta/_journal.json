@@ -8,6 +8,13 @@
       "when": 1766171145049,
       "tag": "0000_kind_azazel",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1766181361916,
+      "tag": "0001_nervous_valkyrie",
+      "breakpoints": true
     }
   ]
 }

@@ -4,6 +4,7 @@ import z from "zod";
 import { auth, OpenAPI } from "./lib/auth";
 import cors from "@elysiajs/cors";
 import { env } from "./env";
+import { createMass } from "./http/routes/Mass/create-mass";
 
 const app = new Elysia()
   .use(
@@ -12,9 +13,10 @@ const app = new Elysia()
       methods: ["GET", "POST", "PUT", "DELETE"],
       allowedHeaders: ["Content-Type", "Authorization"],
       credentials: true,
-    })
+    }),
   )
   .mount(auth.handler)
+  .use(createMass)
   .use(
     openapi({
       documentation: {
@@ -29,11 +31,11 @@ const app = new Elysia()
       mapJsonSchema: {
         zod: z.toJSONSchema,
       },
-    })
+    }),
   );
 
 app.listen(env.PORT, () => {
   console.log(
-    `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
+    `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`,
   );
 });
