@@ -5,6 +5,7 @@ import { auth, OpenAPI } from "./lib/auth";
 import cors from "@elysiajs/cors";
 import { env } from "./env";
 import { createMass } from "./http/routes/Mass/create-mass";
+import { getAllMass } from "./http/routes/Mass/get-all-mass";
 
 const app = new Elysia()
   .use(
@@ -17,6 +18,7 @@ const app = new Elysia()
   )
   .mount(auth.handler)
   .use(createMass)
+  .use(getAllMass)
   .use(
     openapi({
       documentation: {

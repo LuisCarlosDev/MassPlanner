@@ -7,10 +7,10 @@ import openapi from "@elysiajs/openapi";
 
 export const createMass = new Elysia().use(authMacro).post(
   "/mass",
-  ({ body }) => {
+  async ({ body }) => {
     const { name, celebrant, date, location } = body;
 
-    db.insert(masses).values({
+    await db.insert(masses).values({
       name,
       celebrant,
       date,
@@ -25,7 +25,7 @@ export const createMass = new Elysia().use(authMacro).post(
     body: z.object({
       name: z.string().trim().min(1),
       celebrant: z.string().trim().min(1),
-      date: z.date(),
+      date: z.coerce.date(),
       location: z.string().trim().min(1),
     }),
   },
