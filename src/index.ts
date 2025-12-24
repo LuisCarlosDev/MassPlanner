@@ -4,8 +4,9 @@ import z from "zod";
 import { auth, OpenAPI } from "./lib/auth";
 import cors from "@elysiajs/cors";
 import { env } from "./env";
-import { createMass } from "./http/routes/Mass/create-mass";
-import { getAllMass } from "./http/routes/Mass/get-all-mass";
+import { createMass } from "./http/routes/mass/create-mass";
+import { getAllMass } from "./http/routes/mass/get-all-mass";
+import { createChurch } from "./http/routes/church/create-church";
 
 const app = new Elysia()
   .use(
@@ -17,6 +18,7 @@ const app = new Elysia()
     }),
   )
   .mount(auth.handler)
+  .use(createChurch)
   .use(createMass)
   .use(getAllMass)
   .use(

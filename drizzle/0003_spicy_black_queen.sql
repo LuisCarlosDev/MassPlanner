@@ -1,0 +1,1 @@
+ALTER TABLE "masses" DROP COLUMN "location";

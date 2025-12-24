@@ -15,6 +15,20 @@
       "when": 1766181361916,
       "tag": "0001_nervous_valkyrie",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1766433832502,
+      "tag": "0002_deep_harpoon",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1766438011657,
+      "tag": "0003_spicy_black_queen",
+      "breakpoints": true
     }
   ]
 }
