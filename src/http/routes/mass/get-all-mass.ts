@@ -1,8 +1,6 @@
 import Elysia from "elysia";
 import { authMacro } from "../../../macros/auth-macro";
 import { db } from "../../../db/connection";
-import { masses } from "../../../db/schema";
-import z from "zod";
 
 export const getAllMass = new Elysia().use(authMacro).get(
   "/mass",

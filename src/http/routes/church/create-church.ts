@@ -2,7 +2,7 @@ import Elysia from "elysia";
 import { authMacro } from "../../../macros/auth-macro";
 import z from "zod";
 import { db } from "../../../db/connection";
-import { churches, churchTypeEnum } from "../../../db/schema";
+import { churches } from "../../../db/schema";
 
 export const createChurch = new Elysia().use(authMacro).post(
   "/church",
