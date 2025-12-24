@@ -1,13 +1,28 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { openAPI } from "better-auth/plugins";
+import { openAPI, organization } from "better-auth/plugins";
 import { db } from "../db/connection";
+import { sessions } from "../db/schema";
+import { eq } from "drizzle-orm";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
     provider: "pg",
     usePlural: true,
   }),
+  plugins: [
+    openAPI(),
+    organization({
+      organizationHooks: {
+        afterCreateOrganization: async ({ organization, user }) => {
+          await db
+            .update(sessions)
+            .set({ activeOrganizationId: organization.id })
+            .where(eq(sessions.id, user.sessionId));
+        },
+      },
+    }),
+  ],
   emailAndPassword: {
     enabled: true,
     password: {
@@ -23,7 +38,6 @@ export const auth = betterAuth({
     },
   },
   basePath: "/api/auth",
-  plugins: [openAPI()],
   advanced: {
     database: {
       generateId: false,

@@ -1,0 +1,1 @@
+ALTER TYPE "public"."memberRole" ADD VALUE 'owner';

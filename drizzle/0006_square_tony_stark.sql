@@ -1,0 +1,1 @@
+ALTER TABLE "churches" ADD COLUMN "organization_id" uuid NOT NULL;

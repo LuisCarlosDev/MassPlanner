@@ -9,6 +9,7 @@ export const churches = pgTable("churches", {
   name: text("name").notNull(),
   type: churchTypeEnum("type"),
   address: text("address").notNull(),
+  organizationId: uuid("organization_id").notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at")
     .$onUpdate(() => new Date())

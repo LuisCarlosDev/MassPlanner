@@ -2,17 +2,23 @@ import Elysia from "elysia";
 import { authMacro } from "../../../macros/auth-macro";
 import z from "zod";
 import { db } from "../../../db/connection";
-import { churches } from "../../../db/schema";
+import { churches, churchTypeEnum } from "../../../db/schema";
 
 export const createChurch = new Elysia().use(authMacro).post(
   "/church",
-  async ({ body }) => {
+  async ({ body, session }) => {
     const { name, type, address } = body;
+    const organizationId = session.activeOrganizationId;
+
+    if (!organizationId) {
+      return new Response("Organization ID is required", { status: 400 });
+    }
 
     await db.insert(churches).values({
       name,
       type,
       address,
+      organizationId,
     });
   },
   {
